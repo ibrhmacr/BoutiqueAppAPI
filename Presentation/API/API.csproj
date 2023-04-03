@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Infrastructure\Infrastructure\Infrastructure.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\Persistence\Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\product-images\.DS_Store" />
+      <_ContentIncludedByDefault Remove="wwwroot\product-images\1213839963.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\product-images\371694551.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\Sport\Sweat\SweatShirt\1850688202.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\Sport\Sweat\SweatShirt\246032777.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\Sport\Sweat\SweatShirt\502822460.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\Sport\Sweat\SweatShirt\510386671.png" />
+    </ItemGroup>
+
+</Project>
