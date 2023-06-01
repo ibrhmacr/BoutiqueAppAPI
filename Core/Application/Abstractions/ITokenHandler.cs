@@ -1,8 +1,9 @@
 using Application.DTOs.Token;
+using Domain.Entities;
 
 namespace Application.Abstractions;
 
 public interface ITokenHandler
 {
-    TokenDTO CreateAccessToken();
+    TokenDTO CreateAccessToken(AppUser user);
 }

@@ -13,5 +13,5 @@ public interface IStorageService
 
     List<ProductImageDTO> GetProductFiles(int productId);
 
-    Task<bool> HasFile(int productId, string fileName);
+    Task<bool> HasFileAsync(int productId, string fileName);
 }

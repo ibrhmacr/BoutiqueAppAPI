@@ -21,21 +21,25 @@ public class AuthService : IAuthService
         _signInManager = signInManager;
         _tokenHandler = tokenHandler;
     }
-    public async Task<TokenDTO> LoginUser(LoginUserDTO loginUserDto)
+    public async Task<TokenDTO> LoginUserAsync(LoginUserDTO loginUserDto)
     {
-        AppUser? user = await _userManager.FindByNameAsync(loginUserDto.UserNameOrPassword);
+        AppUser? user = await _userManager.FindByNameAsync(loginUserDto.UserNameOrEmail);
         if (user == null)
-            user = await _userManager.FindByEmailAsync(loginUserDto.UserNameOrPassword);
+            user = await _userManager.FindByEmailAsync(loginUserDto.UserNameOrEmail);
         
         if (user == null)
             throw new NotFoundUserException(Messages.NotFoundUser);
+
+        if (!user.EmailConfirmed)
+            throw new EmailConfirmedFailException(Messages.EmailConfirmedFail);
+        
         
         SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, loginUserDto.Password, false);
         //todo lockout durumunu kontrol edebilirsin.
 
         if (result.Succeeded)
         {
-            TokenDTO token = _tokenHandler.CreateAccessToken();
+            TokenDTO token = _tokenHandler.CreateAccessToken(user);
             return token;
         }
         else
@@ -43,7 +47,7 @@ public class AuthService : IAuthService
         
     }
 
-    public async Task<TokenDTO> GoogleLoginUser(string idToken)
+    public async Task<TokenDTO> GoogleLoginUserAsync(string idToken)
     {
         var settings = new GoogleJsonWebSignature.ValidationSettings()
         {
@@ -57,11 +61,11 @@ public class AuthService : IAuthService
         Domain.Entities.AppUser? user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
 
         bool result = user != null;
-        
+
         if (user == null)
         {
             user = await _userManager.FindByEmailAsync(payload.Email);
-            if (user==null)
+            if (user == null)
             {
                 user = new()
                 {
@@ -72,15 +76,18 @@ public class AuthService : IAuthService
                 result = identityResult.Succeeded;
             }
         }
-        
+
         if (result)
             await _userManager.AddLoginAsync(user, info);
         else
             throw new InvalidExternalAuthenticationException(Messages.InvalidExternalAuthentication);
-        
-        TokenDTO token = _tokenHandler.CreateAccessToken();
+
+        TokenDTO token = _tokenHandler.CreateAccessToken(user);
 
         return token;
+
     }
+
+    
     
 }

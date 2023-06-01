@@ -22,8 +22,9 @@ public class StorageService : IStorageService
     
     public async Task<List<(string fileName, string path)>> UploadAsync(int productId, IFormFileCollection files) 
     {
-        var directory = await _fileService.CreateFileDirectory(productId);
-        string uploadDirectory = Path.Combine(_webHostEnvironment.WebRootPath, $"{directory.CategoryName}/{directory.SubCategoryName}/{directory.ProductName}");
+        var directory = await _fileService.CreateFileDirectoryAsync(productId);
+        string uploadDirectory = Path.Combine(_webHostEnvironment.WebRootPath,
+                $"{directory.CategoryName}/{directory.SubCategoryName}/{directory.ProductName}");
         if (!Directory.Exists(uploadDirectory))
             Directory.CreateDirectory(uploadDirectory);
         
@@ -47,7 +48,7 @@ public class StorageService : IStorageService
 
     public async Task DeleteAsync(int productId, string fileName)
     {
-        var result = await _fileService.CreateFileDirectory(productId);
+        var result = await _fileService.CreateFileDirectoryAsync(productId);
         File.Delete(Path.Combine(_webHostEnvironment.WebRootPath,
             $"{result.CategoryName}/{result.SubCategoryName}/{result.ProductName}/{fileName}"));
     }
@@ -68,9 +69,9 @@ public class StorageService : IStorageService
         return list;
     }
 
-    public async Task<bool> HasFile(int productId, string fileName)
+    public async Task<bool> HasFileAsync(int productId, string fileName)
     {
-        var result = await _fileService.CreateFileDirectory(productId);
+        var result = await _fileService.CreateFileDirectoryAsync(productId);
         return File.Exists(Path.Combine(_webHostEnvironment.WebRootPath,
             $"{result.CategoryName}/{result.SubCategoryName}/{result.ProductName}/{fileName}"));
     }

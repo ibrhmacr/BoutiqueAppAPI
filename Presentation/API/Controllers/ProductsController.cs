@@ -19,8 +19,8 @@ public class ProductsController : Controller
     {
         _mediator = mediator;
     }
-
-
+    
+    
     [HttpPost]
     public async Task<IActionResult> CreateProduct(CreateProductCommandRequest createProductCommandRequest)
     {

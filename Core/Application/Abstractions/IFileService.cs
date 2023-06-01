@@ -5,5 +5,5 @@ namespace Application.Abstractions;
 
 public interface IFileService
 {
-    Task<ProductDirectoryDTO> CreateFileDirectory(int productId);
+    Task<ProductDirectoryDTO> CreateFileDirectoryAsync(int productId);
 }

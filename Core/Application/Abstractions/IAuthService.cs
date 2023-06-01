@@ -5,8 +5,8 @@ namespace Application.Abstractions;
 
 public interface IAuthService
 {
-    Task<TokenDTO> LoginUser(LoginUserDTO loginUserDto);
+    Task<TokenDTO> LoginUserAsync(LoginUserDTO loginUserDto);
     
-    Task<TokenDTO> GoogleLoginUser(string idToken);
+    Task<TokenDTO> GoogleLoginUserAsync(string idToken);
     
 }

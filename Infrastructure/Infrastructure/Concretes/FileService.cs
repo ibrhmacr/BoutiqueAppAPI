@@ -20,7 +20,7 @@ public class FileService : IFileService
         _subCategoryReadRepository = subCategoryReadRepository;
         _categoryReadRepository = categoryReadRepository;
     }
-    public async Task<ProductDirectoryDTO> CreateFileDirectory(int productId)
+    public async Task<ProductDirectoryDTO> CreateFileDirectoryAsync(int productId)
     {
         var data = from p in _productReadRepository.Table
             join sc in _subCategoryReadRepository.Table on p.SubCategoryId equals sc.Id

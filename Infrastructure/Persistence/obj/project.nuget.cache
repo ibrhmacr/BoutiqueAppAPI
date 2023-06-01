@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "PXDdB2CAJ5hcB/rhMQjCS9AXsfUoM+o5mM//5+ct2Q8HQL/7CDdeDhZWCEkKBvrGZ1MxT7W+2Sg5QvazwSqszA==",
+  "dgSpecHash": "XP2J6a3Npi/mtIeGAM31N0zrRG0W0VeJcZi3rHoIvwBTddszfZ2+sgi2BNfbDAWB8iMcfRXlWQWOISlym6rZRg==",
   "success": true,
   "projectFilePath": "/Users/ibrahimacar/RiderProjects/BoutiqueAppAPI/Infrastructure/Persistence/Persistence.csproj",
   "expectedPackageFiles": [

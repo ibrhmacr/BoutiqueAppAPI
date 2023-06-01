@@ -1,7 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using Application.Abstractions;
 using Application.DTOs.Token;
+using Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -16,7 +18,7 @@ public class TokenHandler : ITokenHandler
         _configuration = configuration;
     }
 
-    public TokenDTO CreateAccessToken()
+    public TokenDTO CreateAccessToken(AppUser user)
     {
         TokenDTO token = new();
         
@@ -25,12 +27,18 @@ public class TokenHandler : ITokenHandler
         
         //Aldiktan sonra sifrelenmis kimligini olusturuyoruz
         SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha256);
+
+        token.Expiration = DateTime.UtcNow.AddHours(5);
         
         //Olusturulacak tokenin degerlerini veriyoruz ve object initiliezer uzerinden degil constructor uzerinden veriyoruz.
         JwtSecurityToken securityToken = new(
             audience: _configuration["TokenOptions:Audience"],
             issuer: _configuration["TokenOptions:Issuer"],
-            signingCredentials: signingCredentials);
+            expires: token.Expiration,
+            notBefore:DateTime.UtcNow,
+            signingCredentials: signingCredentials,
+            claims:new List<Claim>{new(ClaimTypes.Name, user.UserName)}
+            );
         //Token ayarlamalarini ozellestirip arttirabilirsin kullanim acisindan sadece bu uc ozelligi tanimladik. Ex TokenExpiration.
         
         //Tokeni olusturma islemi

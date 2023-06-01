@@ -1,4 +1,6 @@
 using Application.Abstractions;
+using Application.DTOs;
+using Application.Repositories.Product;
 using Application.Repositories.ProductImageFile;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -9,14 +11,16 @@ public class ProductService : IProductService
 {
     private readonly IStorageService _storageService;
     private readonly IProductImageFileWriteRepository _imageFileWriteRepository;
+    private readonly IProductWriteRepository _productWriteRepository;
 
-    public ProductService(IStorageService storageService, IProductImageFileWriteRepository imageFileWriteRepository)
+    public ProductService(IStorageService storageService, IProductImageFileWriteRepository imageFileWriteRepository, IProductWriteRepository productWriteRepository)
     {
         _storageService = storageService;
         _imageFileWriteRepository = imageFileWriteRepository;
+        _productWriteRepository = productWriteRepository;
     }
-
-    public async Task<bool> UploadProductImage(int productId, IFormFileCollection files)
+    
+    public async Task<bool> UploadProductImageAsync(int productId, IFormFileCollection files)
     {
         var result = await _storageService.UploadAsync(productId,files);
         bool succeded = await _imageFileWriteRepository.AddRangeAsync(result.Select(p => new ProductImageFile()
@@ -34,5 +38,18 @@ public class ProductService : IProductService
             throw new Exception("Urun fotosu eklenirken hata olustu");
         
         
+    }
+
+    public async Task CreateProductAsync(CreateProductDTO createProduct)
+    {
+        await _productWriteRepository.AddAsync(new()
+        {
+            Name = createProduct.Name,
+            SubCategoryId = createProduct.SubCategoryId,
+            Description = createProduct.Description,
+            UnitsInStock = createProduct.UnitsInStock,
+            Price = createProduct.Price
+        });
+        await _productWriteRepository.SaveAsync();
     }
 }

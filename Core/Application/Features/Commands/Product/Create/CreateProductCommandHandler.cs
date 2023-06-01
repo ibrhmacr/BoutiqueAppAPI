@@ -1,3 +1,4 @@
+using Application.Abstractions;
 using Application.Repositories.Product;
 using Domain.Entities;
 using MediatR;
@@ -6,24 +7,24 @@ namespace Application.Features.Commands.Product.Create;
 
 public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, CreateProductCommandResponse>
 {
-    private readonly IProductWriteRepository _productWriteRepository;
+    private readonly IProductService _productService;
 
-    public CreateProductCommandHandler(IProductWriteRepository productWriteRepository)
+    public CreateProductCommandHandler(IProductService productService)
     {
-        _productWriteRepository = productWriteRepository;
+        _productService = productService;
     }
-
+    
     public async Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
     {
-        await _productWriteRepository.AddAsync(new()
+
+        await _productService.CreateProductAsync(new()
         {
             Name = request.Name,
             Price = request.Price,
             SubCategoryId = request.SubCategoryId,
             UnitsInStock = request.UnitsInStock,
-            Description = request.Description,
+            Description = request.Description
         });
-        await _productWriteRepository.SaveAsync();
         return new();
     }
 }

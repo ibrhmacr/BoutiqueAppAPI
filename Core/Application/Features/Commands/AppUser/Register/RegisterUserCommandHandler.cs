@@ -16,7 +16,7 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommandReq
 
     public async Task<RegisterUserCommandResponse> Handle(RegisterUserCommandRequest request, CancellationToken cancellationToken)
     {
-        bool result = await _userService.RegisterUser(new()
+        bool result = await _userService.RegisterUserAsync(new()
         {
             UserName = request.UserName,
             Email = request.Email,

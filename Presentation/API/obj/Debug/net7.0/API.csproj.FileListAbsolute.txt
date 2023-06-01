@@ -72,3 +72,6 @@
 /Users/ibrahimacar/RiderProjects/BoutiqueAppAPI/Presentation/API/bin/Debug/net7.0/Google.Apis.Auth.dll
 /Users/ibrahimacar/RiderProjects/BoutiqueAppAPI/Presentation/API/bin/Debug/net7.0/Google.Apis.Core.dll
 /Users/ibrahimacar/RiderProjects/BoutiqueAppAPI/Presentation/API/bin/Debug/net7.0/Newtonsoft.Json.dll
+/Users/ibrahimacar/RiderProjects/BoutiqueAppAPI/Presentation/API/bin/Debug/net7.0/MailKit.dll
+/Users/ibrahimacar/RiderProjects/BoutiqueAppAPI/Presentation/API/bin/Debug/net7.0/MimeKit.dll
+/Users/ibrahimacar/RiderProjects/BoutiqueAppAPI/Presentation/API/bin/Debug/net7.0/BouncyCastle.Cryptography.dll

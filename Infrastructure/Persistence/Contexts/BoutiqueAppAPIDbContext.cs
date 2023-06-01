@@ -20,7 +20,32 @@ public class BoutiqueAppAPIDbContext : IdentityDbContext<AppUser, AppRole, int>
     public DbSet<Category> Categories { get; set; }
 
     public DbSet<ProductImageFile> ProductImageFiles { get; set; }
-    
+
+    public DbSet<Cart> Carts { get; set; }
+
+    public DbSet<CartItem> CartItems { get; set; }
+
+    public DbSet<Address> Addresses { get; set; }
+
+    public DbSet<Order> Orders { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.Entity<Order>()
+            .HasKey(b => b.Id);
+
+        builder.Entity<Order>()
+            .HasIndex(o => o.OrderCode)
+            .IsUnique();
+
+        builder.Entity<Cart>()
+            .HasOne(c => c.Order)
+            .WithOne(o => o.Cart)
+            .HasForeignKey<Order>(o => o.Id);
+        
+        base.OnModelCreating(builder);
+    }
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         //ChangeTracker : Entityler üzerinden yapılan değişiklerin ya da yeni eklenen verinin yakalanmasını sağlayan propertydir.

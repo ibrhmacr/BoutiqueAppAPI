@@ -17,5 +17,7 @@ public class Product : BaseEntity
     public SubCategory SubCategory { get; set; }
 
     public ICollection<ProductImageFile> ProductImageFiles { get; set; }
+
+    public ICollection<CartItem> CartItems { get; set; }
     
 }

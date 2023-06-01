@@ -14,7 +14,7 @@ public class UploadProductImageCommandHandler : IRequestHandler<UploadProductIma
 
     public async Task<UploadProductImageCommandResponse> Handle(UploadProductImageCommandRequest request, CancellationToken cancellationToken)
     {
-        bool succeded = await _productService.UploadProductImage(request.ProductId, request.Files);
+        bool succeded = await _productService.UploadProductImageAsync(request.ProductId, request.Files);
         if (succeded)
             return new();
         else
